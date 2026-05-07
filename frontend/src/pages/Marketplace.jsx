@@ -1,0 +1,2 @@
+import { useEffect, useState } from 'react';import { api } from '../services/api';
+export default function Marketplace(){const [items,setItems]=useState([]);const user=JSON.parse(localStorage.getItem('session'));const load=()=>api.get('/marketplace').then(r=>setItems(r.data)); useEffect(load,[]); const buy=async(id)=>{await api.post('/stocks/buy',{buyerId:user.id,stockId:id});load();}; return <div className='card'><h2>Marketplace</h2>{items.map(i=><div key={i.id}><b>{i.stockCode}</b> {i.category} ${i.salePrice}<button onClick={()=>buy(i.id)}>Buy</button></div>)}</div>;}

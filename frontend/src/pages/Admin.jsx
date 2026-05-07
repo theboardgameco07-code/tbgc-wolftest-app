@@ -1,0 +1,2 @@
+import { useState } from 'react';import { api } from '../services/api';
+export default function Admin(){const [pw,setPw]=useState('');const [ok,setOk]=useState(false);const [ov,setOv]=useState(null); const login=async()=>{const {data}=await api.post('/admin/login',{password:pw}); setOk(data.ok); if(data.ok){const o=await api.get('/admin/overview'); setOv(o.data);}}; return <div className='card'><h2>Admin</h2><input type='password' onChange={e=>setPw(e.target.value)}/><button onClick={login}>Login</button>{ok&&ov&&<pre>{JSON.stringify(ov,null,2)}</pre>}</div>;}
